@@ -47,6 +47,7 @@ def run_form_reader(
         bulk_upload_submissions(results, GOOGLE_FORMS_LARAVEL_API_KEY, job_mode)
 
     cache.log_last_processed_timestamp(curtime.strftime(GOOGLE_DATETIME_FORMAT))
+    exit(0)
 
 
 def _process_form_results(rows: List[List[Any]], last_run_datetime: datetime) -> List[RawSubmission]:
@@ -62,7 +63,7 @@ def _process_form_results(rows: List[List[Any]], last_run_datetime: datetime) ->
         results.append(
             RawSubmission(
                 data_source=DataSource.google_form,
-                id_source=i,
+                id_source=idx,
                 submission_community="",
                 submission_datetime_utc=row_timestamp,
                 submission_title=f"{row[8]} - {row[4]} - {row[5]} - {row[6]}",
